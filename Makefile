@@ -3,13 +3,10 @@
 CC = clang
 CFLAGS = -Wall -g -fPIC
 
-all: allocator libmyalloc.so
+all: libmyalloc.so
 
-allocator: allocator.c
-	$(CC) $(CFLAGS) -o $@ $^
-
-libmyalloc.so: libmyalloc.c
+libmyalloc.so: allocator.c
 	$(CC) $(CFLAGS) -shared -o $@ $^
 
 clean:
-	rm -f allocator libmyalloc.so *.o
+	rm -f libmyalloc.so *.o
