@@ -2,9 +2,23 @@ Name: Stella Herzberg
 Project 3 CPSC3220 - Memory Allocator
 
 DESCRIPTION:
+This project implements a memory allocator in C which provides replacements for malloc(), calloc(), realloc(), and free(). The allocator uses the segregated free list approach to manage allocations for small objects (2-1024 bytes) and large objects (over 1024 bytes). Allocations are handled usin mmap and released using munmap. 
 
 KNOWN PROBLEMS:
+N/A
 
 DESIGN:
+Small allocations are managed with 4KB pages containing headers and free lists of fixed-size objects. Large allocations are obtained directly using mmap() which includes a header for total size and validation. The page metadata allows the distinguishing between small and large blocks. Memory for large blocks is released after use and small blocks are kept in case they are needed later.
 
 REFERENCES:
+    3220 GitHub - code examples for mmap, a few tests, etc.
+   
+   "Writing a Memory Allocator" - for more specific look at segregated
+    list allocators, size classes, etc. 
+    https://dmitrysoshnikov.com/compilers/writing-a-memory-allocator/
+
+    StackOverflow - more examples for segregated storage techniques.
+    https://stackoverflow.com/questions/75966600/memory-allocator-simple-segregated-storage-how-do-you-infer-the-size-of-an-al
+
+    Cornell University - conceptual assistance for memory allocation and storage.
+    https://www.cs.cornell.edu/courses/cs3410/2018fa/projects/p6/memory_allocation.pdf

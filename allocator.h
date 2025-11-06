@@ -14,4 +14,9 @@ static void free_small(void *ptr);
 static int free_large(void *ptr);
 static size_t get_allocation_size(void *ptr);
 
+void* malloc(size_t size);
+void free(void *ptr);
+void* calloc(size_t nmemb, size_t size);
+void* realloc(void *ptr, size_t size);
+
 #endif

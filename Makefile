@@ -1,7 +1,7 @@
 # Makefile to compile and clean the program
 
 CC = clang
-CFLAGS = -Wall -g -fPIC
+CFLAGS = -Wall -g -fPIC -shared
 
 all: libmyalloc.so
 
