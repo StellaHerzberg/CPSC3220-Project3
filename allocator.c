@@ -1,7 +1,4 @@
-#include <sys/mman.h>
-#include <unistd.h>
-#include <string.h>
-#include <stdint.h>
+#include "allocator.h"
 
 #define PAGE_SIZE 4096
 #define ALIGN 8
