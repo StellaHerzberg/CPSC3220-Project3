@@ -100,15 +100,13 @@ void *malloc(size_t size) {
     if (size <= MAX_SMALL) {
         size_t block_size = roundPageSize(size);
         int index = sizeToIndex(block_size);
-    
-
         if (allFreeLists[index] == NULL) {
             allocatePage(block_size, index);
-
             if (allFreeLists[index] == NULL) {
                 return NULL;
             }
         }
+
         void *block = allFreeLists[index];
         allFreeLists[index] = *(void **)block;
         return block;
@@ -125,7 +123,8 @@ void *malloc(size_t size) {
     header -> size = size;
     header -> mmap_size = mmap_size;
 
-    return (void *)((char *)mem + sizeof(LargeHeader));
+    char *data_start = (char *)mem + sizeof(LargeHeader);
+    return (void *)data_start;
 }
 
 void free(void *ptr) {
@@ -173,7 +172,7 @@ void *realloc(void *ptr, size_t size) {
         return NULL;
     }
 
-    // Copy old content safely
+    // Copy old content
     uintptr_t page_addr = (uintptr_t)ptr & ~(PAGE_SIZE - 1);
     PageHeader *page_header = (PageHeader *)page_addr;
 
