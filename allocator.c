@@ -47,10 +47,6 @@ static int sizeToIndex(size_t size) {
     return index;
 }
 
-__attribute__((constructor)) static void myalloc_init() {
-    initialized = 1;
-}
-
 static void allocatePage(size_t block_size, int index) {
     
     // Calling mmap - from GitHub example
@@ -94,9 +90,9 @@ static void allocatePage(size_t block_size, int index) {
 void *malloc(size_t size) {
 
     if (!initialized) {
-        void *(*real_malloc)(size_t) = dlsym(RTLD_NEXT, "malloc");
-        return real_malloc(size);
+        initialized = 1;
     }
+
     if (size == 0){
         size = 1;
     }
