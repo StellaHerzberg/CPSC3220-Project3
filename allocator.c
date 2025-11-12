@@ -140,7 +140,6 @@ void *malloc(size_t size) {
         // If there is nothing on the free list to hold new allocation, allocate a new page
         if (allFreeLists[index] == NULL) {
             allocatePage(block_size, index);
-            
             // Make sure allocaation worked before moving on
             if (allFreeLists[index] == NULL) {
                 return NULL;
@@ -171,9 +170,10 @@ void *malloc(size_t size) {
     header -> size = size;
     header -> mmap_size = mmap_size;
 
-    // Find where the data can be put considering header size and return it
+    // Find where the data can be put considering header size
     char *data_start = (char *)mem + sizeof(LargeHeader);
-    return (void *)data_start;
+    
+    return (void *)data_start;   //Return where data should begin
 }
 
 // Function to free allocated memory
@@ -196,15 +196,16 @@ void free(void *ptr) {
         //put freed block on the global free list by treating it as ptr, then dereferencing, then changing pointer location
         *(void **)ptr = allFreeLists[index];
         allFreeLists[index] = ptr;
-        return;
-    }
+
     // Handle large blocks / entire pages
-    // get the header of large block which is the ptr minus size of header
-    LargeHeader *large_block = (LargeHeader *)((char *)ptr - sizeof(LargeHeader));
+    } else {
+        // get the header of large block which is the ptr minus size of header
+        LargeHeader *large_block = (LargeHeader *)((char *)ptr - sizeof(LargeHeader));
     
-    //Unmap the memory assuming that the size is valid
-    if (large_block -> mmap_size > 0){
-        munmap((void *)large_block, large_block -> mmap_size);
+        //Unmap the memory assuming that the size is valid
+        if (large_block -> mmap_size > 0){
+            munmap((void *)large_block, large_block -> mmap_size);
+        }
     }
 }
 
