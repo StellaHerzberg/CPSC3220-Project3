@@ -22,3 +22,9 @@ REFERENCES:
 
     Cornell University - conceptual assistance for memory allocation and storage.
     https://www.cs.cornell.edu/courses/cs3410/2018fa/projects/p6/memory_allocation.pdf
+
+    Code Browser - idea for including initializer variables to help prevent issues with LD_PRELOAD setup
+    https://codebrowser.dev/glibc/glibc/malloc/arena.c.html
+
+    StackOverflow - information on equations to allocate pages for different sizes.
+    https://stackoverflow.com/questions/66693793/why-do-memory-managers-use-size-page-size-1-page-size-to-calculate-the-num
